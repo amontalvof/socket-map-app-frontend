@@ -1,11 +1,8 @@
 import React from 'react';
+import MapPage from './pages/MapPage';
 
 const MapsApp = () => {
-    return (
-        <div>
-            <h1>MapsApp</h1>
-        </div>
-    );
+    return <MapPage />;
 };
 
 export default MapsApp;
