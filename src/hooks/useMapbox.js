@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import mapboxgl from 'mapbox-gl';
 
 mapboxgl.accessToken =
@@ -11,8 +12,21 @@ const useMapbox = (startingPoint) => {
         mapDiv.current = node;
     }, []);
 
+    // Reference to markers
+    const markers = useRef({});
+
+    // Map and coordinates
     const map = useRef();
     const [coordinates, setCoordinates] = useState(startingPoint);
+
+    // Add markers function
+    const addMarker = useCallback((event) => {
+        const { lng, lat } = event.lngLat;
+        const marker = new mapboxgl.Marker();
+        marker.id = uuidv4(); // TODO: si el marcador ya tienen id
+        marker.setLngLat([lng, lat]).addTo(map.current).setDraggable(true);
+        markers.current[marker.id] = marker;
+    }, []);
 
     useEffect(() => {
         const actualMap = new mapboxgl.Map({
@@ -24,6 +38,7 @@ const useMapbox = (startingPoint) => {
         map.current = actualMap;
     }, [startingPoint]);
 
+    // when the map is moved
     useEffect(() => {
         map.current?.on('move', (params) => {
             const { lng, lat } = map.current.getCenter();
@@ -36,7 +51,12 @@ const useMapbox = (startingPoint) => {
         return map.current?.off('move');
     }, []);
 
-    return { coordinates, setRef };
+    // add markers when I click
+    useEffect(() => {
+        map.current?.on('click', addMarker);
+    }, [addMarker]);
+
+    return { coordinates, setRef, markers, addMarker };
 };
 
 export default useMapbox;
