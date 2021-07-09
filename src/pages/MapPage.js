@@ -8,13 +8,22 @@ const startingPoint = {
 };
 
 const MapPage = () => {
-    const { coordinates, setRef, newMarker$ } = useMapbox(startingPoint);
+    const { coordinates, setRef, newMarker$, markerMovement$ } =
+        useMapbox(startingPoint);
 
+    // New Marker
     useEffect(() => {
         newMarker$.subscribe((marker) => {
             // TODO: nuevo marcador emitir
         });
     }, [newMarker$]);
+
+    // Marker movement
+    useEffect(() => {
+        markerMovement$.subscribe((marker) => {
+            console.log(marker.id);
+        });
+    }, [markerMovement$]);
 
     return (
         <>

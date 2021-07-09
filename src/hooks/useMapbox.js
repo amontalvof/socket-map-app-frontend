@@ -40,10 +40,9 @@ const useMapbox = (startingPoint) => {
 
         // listen marker movement
         marker.on('drag', (event) => {
-            const id = event.target;
+            const { id } = event.target;
             const { lng, lat } = event.target.getLngLat();
-
-            // TODO: emitir los cambios del marcador
+            markerMovement.current.next({ id, lng, lat });
         });
     }, []);
 
@@ -81,6 +80,7 @@ const useMapbox = (startingPoint) => {
         markers,
         addMarker,
         newMarker$: newMarker.current,
+        markerMovement$: markerMovement.current,
     };
 };
 
