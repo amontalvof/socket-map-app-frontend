@@ -21,7 +21,7 @@ const MapPage = () => {
     // Marker movement
     useEffect(() => {
         markerMovement$.subscribe((marker) => {
-            console.log(marker.id);
+            // console.log(marker.id);
         });
     }, [markerMovement$]);
 
