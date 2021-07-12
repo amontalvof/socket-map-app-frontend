@@ -48,6 +48,11 @@ const useMapbox = (startingPoint) => {
         });
     }, []);
 
+    // function to update marker location
+    const updateLocation = useCallback(({ id, lng, lat }) => {
+        markers.current[id].setLngLat([lng, lat]);
+    }, []);
+
     useEffect(() => {
         const actualMap = new mapboxgl.Map({
             container: mapDiv.current,
@@ -81,6 +86,7 @@ const useMapbox = (startingPoint) => {
         setRef,
         markers,
         addMarker,
+        updateLocation,
         newMarker$: newMarker.current,
         markerMovement$: markerMovement.current,
     };

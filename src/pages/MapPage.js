@@ -9,8 +9,14 @@ const startingPoint = {
 };
 
 const MapPage = () => {
-    const { coordinates, setRef, newMarker$, markerMovement$, addMarker } =
-        useMapbox(startingPoint);
+    const {
+        coordinates,
+        setRef,
+        newMarker$,
+        markerMovement$,
+        addMarker,
+        updateLocation,
+    } = useMapbox(startingPoint);
     const { socket } = useContext(SocketContext);
 
     // listen to existing markers
@@ -32,9 +38,16 @@ const MapPage = () => {
     // Marker movement
     useEffect(() => {
         markerMovement$.subscribe((marker) => {
-            // console.log(marker.id);
+            socket.emit('updated-marker', marker);
         });
-    }, [markerMovement$]);
+    }, [markerMovement$, socket]);
+
+    // Move marker using sockets
+    useEffect(() => {
+        socket.on('updated-marker', (marker) => {
+            updateLocation(marker);
+        });
+    }, [socket, updateLocation]);
 
     // listen new markers
     useEffect(() => {
