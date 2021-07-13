@@ -55,7 +55,7 @@ const MapPage = () => {
             addMarker(marker, marker.id);
         });
     }, [socket, addMarker]);
-    console.log(process.env.NODE_ENV);
+
     return (
         <>
             <div className="info">
