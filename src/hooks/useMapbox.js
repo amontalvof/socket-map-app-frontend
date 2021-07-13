@@ -3,8 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import mapboxgl from 'mapbox-gl';
 import { Subject } from 'rxjs';
 
-mapboxgl.accessToken =
-    'pk.eyJ1IjoiYW5keXdkIiwiYSI6ImNrcXBnNzgyejAxa3Eyd2x0eGphYjk4bHAifQ.Y8bCi84-gT5wGQzpcYgAnA';
+mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
 const useMapbox = (startingPoint) => {
     // Reference to map div

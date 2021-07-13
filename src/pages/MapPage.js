@@ -3,9 +3,9 @@ import { SocketContext } from '../context/SocketContext';
 import useMapbox from '../hooks/useMapbox';
 
 const startingPoint = {
-    lng: -122.4725,
-    lat: 37.801,
-    zoom: 13.5,
+    lng: -103.3251,
+    lat: 20.6707,
+    zoom: 11.35,
 };
 
 const MapPage = () => {
@@ -55,7 +55,7 @@ const MapPage = () => {
             addMarker(marker, marker.id);
         });
     }, [socket, addMarker]);
-
+    console.log(process.env.NODE_ENV);
     return (
         <>
             <div className="info">
